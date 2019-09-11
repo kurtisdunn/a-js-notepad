@@ -1,0 +1,13 @@
+.ql-container {
+    font-family: 'osaka-mono';
+    .ql-editor{
+        font-family: 'osaka-mono';
+        font-size: 14px;
+        min-height: 100vh;
+        color:lime!important;
+        span {
+            color:lime!important;
+            background: #000!important;
+        }
+    }
+}

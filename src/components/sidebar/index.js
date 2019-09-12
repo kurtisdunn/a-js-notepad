@@ -1,9 +1,6 @@
 import './index.scss';
 import React from 'react';
 
-const notes = [];
-// Get getNotes
-// lsst
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +14,7 @@ export default class Sidebar extends React.Component {
 
   }
   selectedNote(event, id){
-
+      this.props.selectedNote(id);
   }
   componentDidMount() {
 
@@ -27,7 +24,6 @@ export default class Sidebar extends React.Component {
     return (
       <div>
         {this.props.notes.map(i => {
-          console.log(i);
           return (<div className="note" key={i.id} onClick={(e) => this.selectedNote(e, i.id)}> {i.delta.ops[0].insert.substring(0, 30)} </div>);
         })}
       </div>

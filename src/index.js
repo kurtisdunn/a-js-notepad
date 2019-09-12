@@ -21,9 +21,14 @@ export default class App extends React.Component {
     this.state ={
       notes: null
     }
-    this.callbackFunction = this.callbackFunction.bind(this);
+    this.editorCallback = this.editorCallback.bind(this);
+    this.sidebarCallback = this.sidebarCallback.bind(this);
   }
-  callbackFunction(childData) {
+  sidebarCallback(childData) {
+    console.log(childData);
+    this.setState({selectedNoteId: childData});
+  }
+  editorCallback(childData) {
     this.setState({note: { id: null, delta: childData, timestamp: moment().format() }});
   }
   componentDidMount(){
@@ -33,10 +38,10 @@ export default class App extends React.Component {
     return (
       <div className="row">
         <div className='col col-sm-2 sidebar'>
-          <Sidebar notes={ notes }/>
+          <Sidebar notes={ notes } selectedNote={this.sidebarCallback}/>
         </div>
         <div className='col-sm-10 editor'>
-          <Editor selectedNote={ this.state.notes ? this.state.notes.reduce((prev, current) => (+current.id > +prev.id) ? current : prev) : null  } callback={this.callbackFunction} />
+          <Editor selectedNote={ notes.filter(r => r.id === this.state.selectedNoteId)} callback={this.editorCallback} />
         </div>
       </div>
     );

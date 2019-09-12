@@ -14,15 +14,21 @@ export default class Editor extends React.Component {
       delta: null
     };
     this.onKeyUp = this.onKeyUp.bind(this);
-    this.newNote = this.newNote.bind(this);
+    // this.newNote = this.newNote.bind(this);
 
     console.log('Editor extends React.Component: ', props);
   }
-  newNote(){
+  componentDidUpdate(nextProps) {
+    console.log("nextProps: ", nextProps);
+    this.state
+  // this.setState({
+        this.state.editor.setContents((nextProps.selectedNote[0] > 0) ? nextProps.selectedNote[0].delta.ops : null);
 
-  }
+}
   // static getDerivedStateFromProps(nextProps, prevState) {
   //   if (nextProps.selectedNote) {
+  //     console.log(  this);
+  //     // this.state.editor.setContents(nextProps.selectedNote[0].delta.ops);
   //     return {
   //       value: nextProps.selectedNote ? nextProps.selectedNote.content : null
   //     };

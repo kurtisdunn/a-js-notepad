@@ -6,37 +6,49 @@ export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      options: {
+        placeholder: 'Wake up, Neo...',
+        theme: 'bubble'
+      },
+      editor: null,
+      delta: null
     };
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.newNote = this.newNote.bind(this);
+
     console.log('Editor extends React.Component: ', props);
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.selectedNote) {
-      return {
-        value: nextProps.selectedNote ? nextProps.selectedNote.content : null
-      };
-    }
-  }
+  newNote(){
 
+  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.selectedNote) {
+  //     return {
+  //       value: nextProps.selectedNote ? nextProps.selectedNote.content : null
+  //     };
+  //   }
+  // }
+  onKeyUp(){
+    //Set up keyup event for creating a new note.
+    const editor = this.state.editor;
+    const editorContainer = document.getElementById('editor');
+    editorContainer.addEventListener('keyup', () => {
+        this.props.callback(this.state.delta);
+        this.state.delta = editor.getContents();
+        // console.log(this.state.delta)
+    });
+  }
   componentDidMount() {
-    var options = {
-      debug: 'info',
-      // modules: {
-      //   toolbar: '#toolbar'
-      // },
-      placeholder: 'Wake up, Neo...',
-      theme: 'bubble'
-    };
-    var editor = new Quill('#editor', options);
+    const editor = this.state.editor = new Quill('#editor', this.state.options);
+    this.onKeyUp()
   }
 
   render() {
     return (
       <div>
-        <div id="toolbar"></div>
         <div id="editor"></div>
       </div>
-      
+
     );
   }
 

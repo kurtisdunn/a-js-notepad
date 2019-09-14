@@ -18,34 +18,24 @@ export default class Editor extends React.Component {
 
     console.log('Editor extends React.Component: ', props);
   }
-  componentDidUpdate(nextProps) {
-    console.log("nextProps: ", nextProps);
-    this.state
-  // this.setState({
-        this.state.editor.setContents((nextProps.selectedNote[0] > 0) ? nextProps.selectedNote[0].delta.ops : null);
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.state.editor.setContents( nextProps.note[0].delta.ops);
 
-}
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.selectedNote) {
-  //     console.log(  this);
-  //     // this.state.editor.setContents(nextProps.selectedNote[0].delta.ops);
-  //     return {
-  //       value: nextProps.selectedNote ? nextProps.selectedNote.content : null
-  //     };
-  //   }
-  // }
+  }
   onKeyUp(){
-    //Set up keyup event for creating a new note.
     const editor = this.state.editor;
     const editorContainer = document.getElementById('editor');
+
     editorContainer.addEventListener('keyup', () => {
         this.props.callback(this.state.delta);
         this.state.delta = editor.getContents();
-        // console.log(this.state.delta)
     });
+
   }
   componentDidMount() {
     const editor = this.state.editor = new Quill('#editor', this.state.options);
+    editor.setContents( this.props.note[0].delta.ops );
+
     this.onKeyUp()
   }
 

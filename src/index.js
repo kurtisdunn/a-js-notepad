@@ -29,7 +29,7 @@ export default class App extends React.Component {
   }
   UNSAFE_componentWillMount(){
     const that = this;
-    GetNotes().then(r => that.setState({notes: r}))
+    GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)}))
   }
   editorCallback(delta) {
     console.log(JSON.stringify(delta));
@@ -58,7 +58,7 @@ export default class App extends React.Component {
         </div>
         <div className='col' style={{ padding: 0 }}>
           <Navbar newNote={ this.navbarCallBack }/>
-          <Editor note={ this.state.notes.slice(-1) } callback={this.editorCallback} />
+          <Editor note={ this.state.note } callback={this.editorCallback} />
         </div>
       </div>
       :

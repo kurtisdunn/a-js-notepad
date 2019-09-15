@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Editor from './components/editor';
+import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
 
 var notes = [
@@ -17,18 +18,21 @@ export default class App extends React.Component {
     super(props);
     console.log('App extends React.Component: ', props);
     this.state ={
-      notes: notes,
+      notes: null,
       note: null
     }
     this.editorCallback = this.editorCallback.bind(this);
     this.sidebarCallback = this.sidebarCallback.bind(this);
-    this.newNote = this.newNote.bind(this);
+    this.navbarCallBack = this.navbarCallBack.bind(this);
   }
   sidebarCallback(id) {
     this.setState({ note: notes.filter(r => r.id === id) });
   }
+  UNSAFE_componentWillMount(){
+    this.setState({notes: notes});
+  }
   editorCallback(delta) {
-    console.log(delta);
+    console.log(JSON.stringify(delta));
 
     // const selectedNoteId = this.state.selectedNoteId;
     // console.log('editorCallback.selectedNoteId: ', selectedNoteId);
@@ -36,21 +40,20 @@ export default class App extends React.Component {
     //   console.log('if editorCallback.selectedNoteId: ', selectedNoteId);
     // }
   }
-  newNote(delta){
+  navbarCallBack(newNote) {
+    console.log(newNote);
+    notes.push({"id":2,"delta":{"ops":[{"attributes":{"background":"#181a1b","color":"#e8e6e3"},"insert":"Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. "},{"insert":"\n\n"},{"attributes":{"background":"#181a1b","color":"#e8e6e3"},"insert":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"},{"insert":"\n"}]},"timestamp":"2019-09-12T19:02:52+10:00"});
+    this.setState({notes: notes})
 
   }
   render() {
     return (
       <div className="row">
-        <div className='col col-sm-3 sidebar'>
+        <div className='col col-auto sidebar'>
           <Sidebar notes={ notes } selectedNote={this.sidebarCallback}/>
         </div>
-        <div className='col-sm-9 editor'>
-        <nav className="navbar navbar-light bg-light">
-          <form className="form-inline">
-            <button className="btn btn-outline-success" type="button">New</button>
-          </form>
-        </nav>
+        <div className='col' style={{ padding: 0 }}>
+          <Navbar newNote={ this.navbarCallBack }/>
           <Editor note={ this.state.note ? this.state.note : notes.slice(-1)} callback={this.editorCallback} />
         </div>
       </div>

@@ -1,3 +1,37 @@
 .sidebar{
+  height: 100%;
+  border-right: 1px solid rgba(0,255,0, 0.2);
+  height: 100vh;
+  padding-right: 0;
+  max-width: 270px;
+  .note{
+    cursor: pointer;
+    color:rgba(0, 255, 1, 0.88);
+    font-size: 0.7rem;
+    padding: .8em .5rem;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+    line-height: 0.9rem;
+    &:hover{
+      background: rgba(0,255,0, 0.2);
+    }
+  }
+  .form-inline{
+    width: 100%;
+    input{
+      width: 100%;
+      background: inherit;
+      border-color: rgba(0, 255, 1, 0.38);
+      margin: 0;
+      font-size: 0.9rem!important;
+      &::placeholder {
+        color:rgba(255, 255, 255, 0.334)
+      }
+      &:active, &:focus{
+        outline: 0;
+        background: inherit;
+        color: lime;
+      }
+    }
+  }
 
 }

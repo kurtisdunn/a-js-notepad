@@ -14,7 +14,6 @@ export default class Editor extends React.Component {
       delta: null
     };
     this.onKeyUp = this.onKeyUp.bind(this);
-    // this.newNote = this.newNote.bind(this);
 
     console.log('Editor extends React.Component: ', props);
   }
@@ -25,23 +24,20 @@ export default class Editor extends React.Component {
   onKeyUp(){
     const editor = this.state.editor;
     const editorContainer = document.getElementById('editor');
-
     editorContainer.addEventListener('keyup', () => {
         this.props.callback(this.state.delta);
         this.state.delta = editor.getContents();
     });
-
   }
   componentDidMount() {
     const editor = this.state.editor = new Quill('#editor', this.state.options);
     editor.setContents( this.props.note[0].delta.ops );
-
     this.onKeyUp()
   }
 
   render() {
     return (
-      <div>
+      <div className="editor container">
         <div id="editor"></div>
       </div>
 

@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
         </form>
       </nav>
         {this.props.notes.map(i => {
-          return (<div className="note" key={i.id} onClick={(e) => this.selectedNote(e, i.id)}> {i.delta.ops[0].insert.substring(0, 90)} </div>);
+          return (<div className="note" key={i._id} onClick={(e) => this.selectedNote(e, i._id)}> {i.delta.ops[0].insert.substring(0, 90)} </div>);
         })}
       </div>
     );

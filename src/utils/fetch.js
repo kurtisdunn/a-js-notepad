@@ -1,5 +1,4 @@
 import 'whatwg-fetch';
-// import config from '../../utils/config';
 
 function checkStatus (res) {
     // console.log(res);
@@ -10,7 +9,6 @@ function checkStatus (res) {
     // }
 
   if (res.status >= 200 && res.status < 300) {
-    // console.log(res);
     return res;
  }else if(res.status === 500) {
    return res;
@@ -26,7 +24,7 @@ function parseJson (res) {
 }
 
 export default function (path, opts = {}) {
-  return fetch(path, opts)
+  return fetch(`api/${path}`, opts)
     .then(checkStatus)
     .then(parseJson);
 }

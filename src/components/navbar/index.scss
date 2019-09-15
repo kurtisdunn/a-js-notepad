@@ -5,11 +5,10 @@
     border-color:rgba(0, 255, 1, 0.38);
     margin: 0;
     color:rgba(255, 255, 255, 0.334);
-
-      &:active, &:focus, &:hover{
-        outline: 0;
-        background: inherit;
-          color: lime;
-      }
+    &:active, &:focus, &:hover{
+      outline: 0;
+      background: inherit;
+        color: lime;
+    }
   }
 }

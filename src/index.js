@@ -8,8 +8,9 @@ import Editor from './components/editor';
 import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
 
-import GetNotes from './api/notes/get'
-import PostNote from './api/notes/post'
+import GetNotes from './api/notes/get';
+import PostNote from './api/notes/post';
+import PutNote from './api/notes/put';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,16 +30,18 @@ export default class App extends React.Component {
   }
   UNSAFE_componentWillMount(){
     const that = this;
-    GetNotes().then(r => that.setState({notes: r}))
+    setTimeout(() => {
+      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)}))
+
+    }, 700)
   }
   editorCallback(delta) {
-    console.log(JSON.stringify(delta));
-
-    // const selectedNoteId = this.state.selectedNoteId;
-    // console.log('editorCallback.selectedNoteId: ', selectedNoteId);
-    // if(selectedNoteId >= 0 ){
-    //   console.log('if editorCallback.selectedNoteId: ', selectedNoteId);
-    // }
+    const that = this;
+    PutNote(this.state.note[0]._id, {delta: delta}).then(i => {
+      that.state.note[0] = i;
+      var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
+      that.state.notes[foundIndex] = i;
+    });
   }
   navbarCallBack(newNote) {
     const that = this;
@@ -46,6 +49,7 @@ export default class App extends React.Component {
     // blank
     // NotesPost().then(r => that.setState({ notes: notes }))
     // this.setState({notes: notes});
+
   }
   render() {
 
@@ -58,7 +62,7 @@ export default class App extends React.Component {
         </div>
         <div className='col' style={{ padding: 0 }}>
           <Navbar newNote={ this.navbarCallBack }/>
-          <Editor note={ this.state.notes.slice(-1) } callback={this.editorCallback} />
+          <Editor note={ this.state.note } callback={this.editorCallback} />
         </div>
       </div>
       :

@@ -47,10 +47,11 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-       new HtmlWebpackPlugin({
-         title: 'Notepad!',
-         template: 'src/index.html'
-       })
+    new HtmlWebpackPlugin({
+     title: 'Notepad!',
+     template: 'src/index.html'
+    }),
+    new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/)
   ],
   devServer: {
     contentBase: './dist',

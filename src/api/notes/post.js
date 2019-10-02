@@ -2,6 +2,7 @@ import assign from 'object-assign';
 import fetch from '../../utils/fetch';
 
 export default function (data) {
+  console.log(data);
   return fetch('/notes', {
     method: 'post',
     headers: {

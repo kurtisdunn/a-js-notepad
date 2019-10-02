@@ -1,6 +1,6 @@
 import './index.scss';
 import 'bootstrap';
-import moment from 'moment';
+import moment from 'moment/min/moment.min';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

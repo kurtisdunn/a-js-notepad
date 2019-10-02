@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import Quill from 'quill';
+import Quill from 'quill/dist/quill.min';
 
 export default class Editor extends React.Component {
   constructor(props) {

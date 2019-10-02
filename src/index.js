@@ -19,35 +19,48 @@ export default class App extends React.Component {
     this.state ={
       notes: null,
       note: null
-    }
+    };
     this.editorCallback = this.editorCallback.bind(this);
+    this.setEditor = this.setEditor.bind(this);
     this.sidebarCallback = this.sidebarCallback.bind(this);
     this.navbarCallBack = this.navbarCallBack.bind(this);
-  }
-  sidebarCallback(id) {
-    console.log('sidebarCallback', this.state.notes.filter(r => r._id === id));
-    this.setState({ note: this.state.notes.filter(r => r._id === id) });
   }
   UNSAFE_componentWillMount(){
     const that = this;
     setTimeout(() => {
-      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)}))
+      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)}));
 
-    }, 700)
+    }, 700);
+  }
+  sidebarCallback(id) {
+    // console.log('sidebarCallback', this.state.notes.filter(r => r._id === id));
+    this.setState({ note: this.state.notes.filter(r => r._id === id) });
   }
   editorCallback(delta) {
     const that = this;
-    PutNote(this.state.note[0]._id, {delta: delta}).then(i => {
-      that.state.note[0] = i;
-      var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
-      that.state.notes[foundIndex] = i;
-    });
+    console.log(this.state.note);
+    const note = this.state.note;
+    // if(!note){
+    //   console.log('test');
+    //   PostNote().then(r => this.state.notes.push(r));
+    // }
+    // PutNote(note._id, {delta: delta}).then(i => {
+    //   that.state.note[0] = i;
+    //   var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
+    //   that.state.notes[foundIndex] = i;
+    // });
+  }
+  setEditor(editor){
+    console.log(editor);
+    this.setState({ editor: editor });
   }
   navbarCallBack(newNote) {
     const that = this;
-
+    this.state.editor.setContents([{ insert: '\n' }]);
+    this.setState({note: null});
+    // this.state.notes.push({_id: null, delta: null});
     // blank
-    // NotesPost().then(r => that.setState({ notes: notes }))
+
     // this.setState({notes: notes});
 
   }
@@ -62,7 +75,7 @@ export default class App extends React.Component {
         </div>
         <div className='col' style={{ padding: 0 }}>
           <Navbar newNote={ this.navbarCallBack }/>
-          <Editor note={ this.state.note } callback={this.editorCallback} />
+          <Editor note={ this.state.note } callback={this.editorCallback} editor={ this.setEditor } />
         </div>
       </div>
       :

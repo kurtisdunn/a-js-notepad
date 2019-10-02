@@ -40,7 +40,6 @@ export default class App extends React.Component {
   editorCallback(delta, editor) {
     const that = this;
     const note = this.state.note ? this.state.note[0] : null;
-console.log(delta);
     if(that.state.note){
       console.log('note: ', that.state.note);
       PutNote(note._id, {delta: delta}).then(i => {
@@ -50,7 +49,7 @@ console.log(delta);
       });
     } else {
       console.log(delta);
-      PostNote({ops: [{ insert: '\n' }]}).then(r => this.state.notes.push(r));
+      PostNote({delta:{ ops: [{ insert: '\n' }]}}).then(r => this.state.note = r);
     }
   }
   setEditor(editor){
@@ -58,15 +57,7 @@ console.log(delta);
   }
   navbarCallBack(newNote){
     this.state.note = null;
-    this.setState({ note: null });
-    console.log(this.state.note);
     this.state.editor.setContents([{ insert: '\n' }]);
-
-    // this.state.notes.push({_id: null, delta: null});
-    // blank
-
-    // this.setState({notes: notes});
-
   }
   render(){
 

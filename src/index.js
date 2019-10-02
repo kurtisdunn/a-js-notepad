@@ -1,6 +1,6 @@
 import './index.scss';
 import 'bootstrap';
-import moment from 'moment';
+import moment from 'moment/min/moment.min';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -33,38 +33,42 @@ export default class App extends React.Component {
     }, 700);
   }
   sidebarCallback(id) {
+    console.log(this.state.notes.filter(r => r._id === id));
     // console.log('sidebarCallback', this.state.notes.filter(r => r._id === id));
     this.setState({ note: this.state.notes.filter(r => r._id === id) });
   }
-  editorCallback(delta) {
+  editorCallback(delta, editor) {
     const that = this;
-    console.log(this.state.note);
-    const note = this.state.note;
-    // if(!note){
-    //   console.log('test');
-    //   PostNote().then(r => this.state.notes.push(r));
-    // }
-    // PutNote(note._id, {delta: delta}).then(i => {
-    //   that.state.note[0] = i;
-    //   var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
-    //   that.state.notes[foundIndex] = i;
-    // });
+    const note = this.state.note ? this.state.note[0] : null;
+console.log(delta);
+    if(that.state.note){
+      console.log('note: ', that.state.note);
+      PutNote(note._id, {delta: delta}).then(i => {
+        that.state.note[0] = i;
+        var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
+        that.state.notes[foundIndex] = i;
+      });
+    } else {
+      console.log(delta);
+      PostNote({ops: [{ insert: '\n' }]}).then(r => this.state.notes.push(r));
+    }
   }
   setEditor(editor){
-    console.log(editor);
     this.setState({ editor: editor });
   }
-  navbarCallBack(newNote) {
-    const that = this;
+  navbarCallBack(newNote){
+    this.state.note = null;
+    this.setState({ note: null });
+    console.log(this.state.note);
     this.state.editor.setContents([{ insert: '\n' }]);
-    this.setState({note: null});
+
     // this.state.notes.push({_id: null, delta: null});
     // blank
 
     // this.setState({notes: notes});
 
   }
-  render() {
+  render(){
 
     return (
       <div>
@@ -75,15 +79,15 @@ export default class App extends React.Component {
         </div>
         <div className='col' style={{ padding: 0 }}>
           <Navbar newNote={ this.navbarCallBack }/>
-          <Editor note={ this.state.note } callback={this.editorCallback} editor={ this.setEditor } />
+          <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
         </div>
       </div>
       :
-          <div style={{ width: '100%', textAlign: 'center'}}>
-            <div className="fa-3x" style={{ paddingTop: '45vh'}}>
-                <i className="fas fa-sync fa-spin"></i>
-            </div>
-          </div>
+      <div style={{ width: '100%', textAlign: 'center'}}>
+        <div className="fa-3x" style={{ paddingTop: '45vh'}}>
+            <i className="fas fa-sync fa-spin"></i>
+        </div>
+      </div>
       }
       </div>
     );

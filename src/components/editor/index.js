@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import Quill from 'quill';
+import Quill from 'quill/dist/quill.min';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -16,17 +16,15 @@ export default class Editor extends React.Component {
     console.log('Editor extends React.Component: ', props);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-
     if(nextProps.note){
-      this.state.editor.setContents( nextProps.note[0].delta.ops);
+      this.state.editor.setContents( nextProps.note[0].delta.ops, this.state.editor);
     }
-
   }
   componentDidMount() {
     const that = this;
     const editor = this.state.editor = new Quill('#editor', this.state.editorOptions);
     editor.setContents( this.props.note[0].delta.ops );
-
+          that.props.editor(editor);
     editor.on('editor-change', function(eventName, ...args) {
       if (eventName === 'text-change') {
          that.state.delta = editor.getContents();
@@ -35,15 +33,12 @@ export default class Editor extends React.Component {
     });
     that.props.editor(editor);
   }
-
   render() {
     return (
       <div className="editor container">
         <div id="editor"></div>
       </div>
-
     );
   }
-
 }
 module.hot.accept();

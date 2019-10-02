@@ -13,7 +13,6 @@ export default class Sidebar extends React.Component {
   selectedNote(event, id){
     this.props.selectedNote(id);
   }
-
   render() {
     const notes = this.props.notes;
     return (

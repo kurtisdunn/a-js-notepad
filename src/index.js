@@ -38,11 +38,12 @@ export default class App extends React.Component {
   }
   editorCallback(delta) {
     const that = this;
-    const note = this.state.note[0];
-    if(!note){
-      console.log('test');
-      PostNote().then(r => this.state.notes.push(r));
-    }
+    console.log(this.state.note);
+    const note = this.state.note;
+    // if(!note){
+    //   console.log('test');
+    //   PostNote().then(r => this.state.notes.push(r));
+    // }
     // PutNote(note._id, {delta: delta}).then(i => {
     //   that.state.note[0] = i;
     //   var foundIndex = that.state.notes.findIndex(x => x._id == i._id);

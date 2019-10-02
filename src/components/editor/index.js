@@ -16,7 +16,11 @@ export default class Editor extends React.Component {
     console.log('Editor extends React.Component: ', props);
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    this.state.editor.setContents( nextProps.note[0].delta.ops);
+
+    if(nextProps.note){
+      this.state.editor.setContents( nextProps.note[0].delta.ops);
+    }
+
   }
   componentDidMount() {
     const that = this;

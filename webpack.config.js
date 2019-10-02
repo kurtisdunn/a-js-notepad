@@ -51,7 +51,7 @@ module.exports = {
     hot: true,
     proxy: {
       '/api': {
-        target: 'http://ec2-52-62-174-17.ap-southeast-2.compute.amazonaws.com:3000',
+        target: 'http://52.64.203.43:3000',
         pathRewrite: {
           '/api' : ''
         },

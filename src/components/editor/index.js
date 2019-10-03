@@ -17,21 +17,21 @@ export default class Editor extends React.Component {
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if(nextProps.note){
-      this.state.editor.setContents( nextProps.note[0].delta.ops, this.state.editor);
+      this.state.editor.setContents(nextProps.note.delta.ops, this.state.editor);
     }
   }
   componentDidMount() {
     const that = this;
     const editor = this.state.editor = new Quill('#editor', this.state.editorOptions);
-    editor.setContents( this.props.note[0].delta.ops );
-          that.props.editor(editor);
+    that.props.editor(editor);
+    editor.setContents( that.props.note.delta.ops );
     editor.on('editor-change', function(eventName, ...args) {
       if (eventName === 'text-change') {
-         that.state.delta = editor.getContents();
-         that.props.callback(that.state.delta);
+        const text = editor.getText();
+        that.state.delta = editor.getContents();
+        if(text.length > 3 ) { that.props.callback(that.state.delta); }
       }
     });
-    that.props.editor(editor);
   }
   render() {
     return (

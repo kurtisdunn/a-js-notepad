@@ -15,7 +15,6 @@ export default class Sidebar extends React.Component {
   }
   render() {
     const notes = this.props.notes;
-    console.log(notes);
     return (
       <div>
       <nav className="navbar navbar-dark bg-dark">

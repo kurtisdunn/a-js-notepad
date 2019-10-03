@@ -28,28 +28,29 @@ export default class App extends React.Component {
   UNSAFE_componentWillMount(){
     const that = this;
     setTimeout(() => {
-      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)}));
-
+      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)[0]}));
     }, 700);
   }
   sidebarCallback(id) {
-    console.log(this.state.notes.filter(r => r._id === id));
-    // console.log('sidebarCallback', this.state.notes.filter(r => r._id === id));
-    this.setState({ note: this.state.notes.filter(r => r._id === id) });
+    this.setState({ note: this.state.notes.filter(r => r._id === id)[0] });
   }
   editorCallback(delta, editor) {
     const that = this;
-    const note = this.state.note ? this.state.note[0] : null;
-    if(that.state.note){
-      console.log('note: ', that.state.note);
+    let note = this.state.note ? this.state.note : null;
+    const notes = this.state.notes;
+    if(!that.state.note || !that.state.note === undefined){
+      PostNote({delta: delta}).then(r => {
+        this.state.note = r;
+        let notes2 = [...notes, r];
+        that.state.notes.push({r})
+        that.setState({notes: notes2});
+      });
+    } else {
       PutNote(note._id, {delta: delta}).then(i => {
-        that.state.note[0] = i;
+        note = i;
         var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
         that.state.notes[foundIndex] = i;
       });
-    } else {
-      console.log(delta);
-      PostNote({delta:{ ops: [{ insert: '\n' }]}}).then(r => this.state.note = r);
     }
   }
   setEditor(editor){

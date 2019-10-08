@@ -7,13 +7,27 @@ body{
   line-height: 1.2em;
   background: #000;
   color:lime!important;
-
   font-family: 'osaka-mono';
   overflow-x: hidden;
-  height: 100vh;
+  min-height: 100vh;
+
 }
-.container{
-  min-width:99%!important;
-  padding:0!important;
-  padding-right: 10px!important;
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
 }

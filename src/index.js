@@ -1,5 +1,6 @@
 import './index.scss';
 import 'bootstrap';
+import 'jquery';
 import moment from 'moment/min/moment.min';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -65,15 +66,16 @@ export default class App extends React.Component {
     return (
       <div>
         { this.state.notes ?
-      <div className="row">
-        <div className='col col-auto sidebar'>
-          <Sidebar notes={ this.state.notes } selectedNote={this.sidebarCallback}/>
-        </div>
-        <div className='col' style={{ padding: 0 }}>
-          <Navbar newNote={ this.navbarCallBack }/>
-          <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
-        </div>
-      </div>
+        (
+        <div className="d-flex" id="wrapper">
+          <div id="sidebar-wrapper">
+            <Sidebar notes={ this.state.notes } selectedNote={this.sidebarCallback} />
+          </div>
+          <div id="page-content-wrapper">
+            <Navbar newNote={ this.navbarCallBack }/>
+            <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
+          </div>
+        </div>)
       :
       <div style={{ width: '100%', textAlign: 'center'}}>
         <div className="fa-3x" style={{ paddingTop: '45vh'}}>

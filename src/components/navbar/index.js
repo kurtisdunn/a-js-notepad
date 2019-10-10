@@ -23,7 +23,7 @@ export default class Navbar extends React.Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" style={{ padding: '0.20rem 1rem'}}>
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{ padding: '0.20rem 1rem'}}>
         <button className="btn btn-outline-success my-2 my-sm-0" onClick={() => this.toggleSidebar()}><i className="fas fa-bars"></i></button>
         &nbsp;&nbsp;
           <button className="btn btn-outline-success my-2 my-sm-0" onClick={() => this.newNote()}>New</button>

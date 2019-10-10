@@ -17,6 +17,11 @@ export default class Sidebar extends React.Component {
     const notes = this.props.notes;
     return (
       <div className="sidebar">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{ padding: '0.45rem 1rem'}}>
+        <form className="form-inline">
+          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+        </form>
+      </nav>
         {this.props.notes.map(i => {
           return (<div className="note" key={i._id} onClick={(e) => this.selectedNote(e, i._id)}> {i.delta.ops[0].insert.substring(0, 90)} </div>);
         })}

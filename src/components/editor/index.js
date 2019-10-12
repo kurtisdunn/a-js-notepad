@@ -29,7 +29,7 @@ export default class Editor extends React.Component {
       if (eventName === 'text-change') {
         const text = editor.getText();
         that.state.delta = editor.getContents();
-        if(text.length > 3 ) { that.props.callback(that.state.delta); }
+        if(text.length > 3 ) { that.props.callback(that.state.delta, 3); }
       }
     });
   }

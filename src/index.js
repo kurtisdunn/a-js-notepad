@@ -9,6 +9,7 @@ import Editor from './components/editor';
 import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
 
+import DeleteNote from './api/notes/delete';
 import GetNotes from './api/notes/get';
 import PostNote from './api/notes/post';
 import PutNote from './api/notes/put';
@@ -24,29 +25,34 @@ export default class App extends React.Component {
     this.editorCallback = this.editorCallback.bind(this);
     this.setEditor = this.setEditor.bind(this);
     this.sidebarCallback = this.sidebarCallback.bind(this);
-    this.navbarCallBack = this.navbarCallBack.bind(this);
+    this.newNote = this.newNote.bind(this);
+    this.removeNote = this.removeNote.bind(this);
   }
   UNSAFE_componentWillMount(){
     const that = this;
     setTimeout(() => {
       GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)[0]}));
+
     }, 700);
+
   }
   sidebarCallback(id) {
     this.setState({ note: this.state.notes.filter(r => r._id === id)[0] });
   }
-  editorCallback(delta, editor) {
+  editorCallback(delta, count) {
     const that = this;
-    let note = this.state.note ? this.state.note : null;
     const notes = this.state.notes;
-    if(!that.state.note || !that.state.note === undefined){
+    let note = this.state.note ? this.state.note : null;
+    console.log(note);
+    if(!that.state.note || !that.state.note === null){
       PostNote({delta: delta}).then(r => {
         this.state.note = r;
         let notes2 = [...notes, r];
         that.state.notes.push({r})
         that.setState({notes: notes2});
       });
-    } else {
+    }
+     if (count === 3){
       PutNote(note._id, {delta: delta}).then(i => {
         note = i;
         var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
@@ -57,23 +63,30 @@ export default class App extends React.Component {
   setEditor(editor){
     this.setState({ editor: editor });
   }
-  navbarCallBack(newNote){
+  newNote(){
     this.state.note = null;
     this.state.editor.setContents([{ insert: '\n' }]);
   }
+  removeNote(){
+      const id = this.state.note._id;
+      DeleteNote(id).then(r => {
+        this.setState({note:null, notes: this.state.notes.filter(item => item._id !== id)});
+      });
+  }
   render(){
-
+    console.log(this.state.notes)
     return (
       <div>
         { this.state.notes ?
+
         (
         <div className="d-flex" id="wrapper">
           <div id="sidebar-wrapper">
-            <Sidebar notes={ this.state.notes } selectedNote={this.sidebarCallback} />
+            <Sidebar notes={ this.state.notes } selectedNote={ this.sidebarCallback } />
           </div>
           <div id="page-content-wrapper">
-            <Navbar newNote={ this.navbarCallBack }/>
-            <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
+            <Navbar newNote={ this.newNote } deleteNote={ () => this.removeNote() }/>
+            <Editor note={ this.state.note } callback={ () => this.editorCallback() } editor={ this.setEditor } />
           </div>
         </div>)
       :

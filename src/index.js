@@ -51,7 +51,8 @@ export default class App extends React.Component {
         that.setState({notes: notes2});
       });
     }
-     if (count === 3){
+     if (count === 3 && note != null){
+       console.log(note._id);
       PutNote(note._id, {delta: delta}).then(i => {
         note = i;
         var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
@@ -85,7 +86,7 @@ export default class App extends React.Component {
           </div>
           <div id="page-content-wrapper">
             <Navbar newNote={ this.newNote } deleteNote={ () => this.removeNote() }/>
-            <Editor note={ this.state.note } callback={ () => this.editorCallback() } editor={ this.setEditor } />
+            <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
           </div>
         </div>)
       :

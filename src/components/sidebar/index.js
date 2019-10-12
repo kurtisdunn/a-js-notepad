@@ -39,11 +39,11 @@ export default class Sidebar extends React.Component {
           <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
         </form>
       </nav>
-        {this.props.notes.map(i => {
+        {this.props.notes.map((r, i) => {
           return (
-            <div className="note" key={i._id} onClick={(e) => this.selectedNote(e, i._id)}>
-              <span className="desc">{ i.delta.ops[0].insert.substring(0, 45)} </span>
-              <span className="when">{ getdateFormated(i.updatedAt) }</span>
+            <div className="note" key={i} onClick={(e) => this.selectedNote(e, r._id)}>
+              <span className="desc">{ r.delta.ops[0].insert.substring(0, 45)} </span>
+              <span className="when">{ getdateFormated(r.updatedAt) }</span>
 
             </div>);
         })}

@@ -5,6 +5,7 @@
   -o-transition: margin .25s ease-out;
   transition: margin .25s ease-out;
     max-width: 220px;
+
 }
   .sidebar{
     min-height: 100vh;
@@ -12,12 +13,41 @@
     .note{
       cursor: pointer;
       color:rgba(0, 255, 1, 0.88);
-      font-size: 0.7rem;
-      padding: .8em .5rem;
+
+      padding: 0.7em .5rem;
       border-bottom: 1px solid rgba(0, 255, 0, 0.2);
       line-height: 0.9rem;
       &:hover{
-        background: rgba(0,255,0, 0.2);
+        background: rgba(0,255,0, 0.1);
+      }
+      .desc, .when{
+        height: 100%;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .desc{
+        font-size: 0.7rem;
+        font-weight: 500
+      }
+      .when{
+        font-weight: 300;
+        font-size: 0.7rem;
+        color:rgba(108, 118, 125, 1.000)
+      }
+    }
+    .form-control{
+      background: inherit;
+      font-size: 0.9rem!important;
+      // border: 0;
+      border-top:0;
+      border-right:0;
+      border-left:0;
+      // margin: 0;
+      color:rgba(255, 255, 255, 0.334);
+      &:active, &:focus, &:hover{
+        outline: 0;
+        background: inherit;
+          color: lime;
       }
     }
     /*

@@ -1,5 +1,21 @@
 import './index.scss';
 import React from 'react';
+import Moment from 'moment';
+
+function getdateFormated (date){
+    var otherDates = Moment(date).fromNow();
+    var calback= function () {
+       return '['+otherDates+']';
+    }
+    return Moment(date).calendar(null,{
+       sameDay: '[Today]',
+       nextDay:calback,
+       nextWeek: calback,
+       lastDay: calback,
+       lastWeek: calback,
+       sameElse: 'MMM DD, YYYY'
+   });
+}
 
 export default class Sidebar extends React.Component {
   constructor(props) {
@@ -24,11 +40,14 @@ export default class Sidebar extends React.Component {
         </form>
       </nav>
         {this.props.notes.map(i => {
-          console.log(i);
-          return (<div className="note" key={i._id} onClick={(e) => this.selectedNote(e, i._id)}> {i.delta.ops[0].insert.substring(0, 90)} </div>);
+          return (
+            <div className="note" key={i._id} onClick={(e) => this.selectedNote(e, i._id)}>
+              <span className="desc">{ i.delta.ops[0].insert.substring(0, 45)} </span>
+              <span className="when">{ getdateFormated(i.updatedAt) }</span>
+
+            </div>);
         })}
       </div>
     );
   }
 }
-module.hot.accept();

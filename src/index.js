@@ -43,7 +43,6 @@ export default class App extends React.Component {
     const that = this;
     const notes = this.state.notes;
     let note = this.state.note ? this.state.note : null;
-    console.log(note);
     if(!that.state.note || !that.state.note === null){
       PostNote({delta: delta}).then(r => {
         this.state.note = r;
@@ -74,7 +73,7 @@ export default class App extends React.Component {
       });
   }
   render(){
-    console.log(this.state.notes)
+
     return (
       <div>
         { this.state.notes ?

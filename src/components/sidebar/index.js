@@ -25,14 +25,13 @@ export default class Sidebar extends React.Component {
     };
     console.log('Sidebar extends React.Component: ', props);
     this.selectedNote = this.selectedNote.bind(this);
-    this.searchString = this.searchString.bind(this);
+    this.searchNotes = this.searchNotes.bind(this);
   }
   selectedNote(event, id){
     this.props.selectedNote(id);
   }
-  searchString(str){
-    console.log(str);
-    // this.props.selectedNote(id);
+  searchNotes(str){
+    this.props.searchNotes(str);
   }
   render() {
     const notes = this.props.notes;
@@ -41,7 +40,7 @@ export default class Sidebar extends React.Component {
       <div className="sidebar">
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{ padding: '0.45rem 1rem'}}>
         <form className="form-inline">
-          <input className="form-control mr-sm-2" onKeyUp={(e) => {e.target.value.length > 2 ? this.searchString(e.target.value) : null }} type="search" placeholder="Search" aria-label="Search" />
+          <input className="form-control mr-sm-2" onKeyUp={(e) => { this.searchNotes(e.target.value) }} type="search" placeholder="Search" aria-label="Search" />
         </form>
       </nav>
         {this.props.notes.map((r, i) => {

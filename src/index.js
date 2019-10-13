@@ -10,9 +10,11 @@ import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
 
 import DeleteNote from './api/notes/delete';
+import FindNote from './api/notes/find';
 import GetNotes from './api/notes/get';
 import PostNote from './api/notes/post';
 import PutNote from './api/notes/put';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,6 +28,7 @@ export default class App extends React.Component {
     this.setEditor = this.setEditor.bind(this);
     this.sidebarCallback = this.sidebarCallback.bind(this);
     this.newNote = this.newNote.bind(this);
+    this.searchNotes = this.searchNotes.bind(this);
     this.removeNote = this.removeNote.bind(this);
   }
   UNSAFE_componentWillMount(){
@@ -52,7 +55,6 @@ export default class App extends React.Component {
       });
     }
      if (count === 3 && note != null){
-       console.log(note._id);
       PutNote(note._id, {delta: delta}).then(i => {
         note = i;
         var foundIndex = that.state.notes.findIndex(x => x._id == i._id);
@@ -73,29 +75,40 @@ export default class App extends React.Component {
         this.setState({note:null, notes: this.state.notes.filter(item => item._id !== id)});
       });
   }
+  searchNotes(str){
+    const that = this;
+    const notes = this.state.notes;
+    if(str.length === 0){
+      GetNotes().then(r => that.setState({notes: r, note: r.slice(-1)[0]}));
+    }
+    if(str.length > 2){
+      FindNote(str).then(r => {
+        that.setState({notes: r});
+      })
+    }
+
+  }
   render(){
 
     return (
       <div>
-        { this.state.notes ?
-
-        (
+        { this.state.notes ? (
         <div className="d-flex" id="wrapper">
           <div id="sidebar-wrapper">
-            <Sidebar notes={ this.state.notes } selectedNote={ this.sidebarCallback } />
+            <Sidebar notes={ this.state.notes } selectedNote={ this.sidebarCallback } searchNotes={ this.searchNotes } />
           </div>
           <div id="page-content-wrapper">
             <Navbar newNote={ this.newNote } deleteNote={ () => this.removeNote() }/>
             <Editor note={ this.state.note } callback={ this.editorCallback } editor={ this.setEditor } />
           </div>
-        </div>)
-      :
+        </div>
+      ) : (
       <div style={{ width: '100%', textAlign: 'center'}}>
         <div className="fa-3x" style={{ paddingTop: '45vh'}}>
             <i className="fas fa-sync fa-spin"></i>
         </div>
       </div>
-      }
+    )}
       </div>
     );
   }

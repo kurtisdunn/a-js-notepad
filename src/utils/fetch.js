@@ -24,7 +24,7 @@ function parseJson (res) {
 }
 
 export default function (path, opts = {}) {
-  return fetch(`api/${path}`, opts)
+  return fetch(`api.kurtd.photography/api/${path}`, opts)
     .then(checkStatus)
     .then(parseJson);
 }

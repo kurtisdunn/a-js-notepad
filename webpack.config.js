@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;// ...
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/components/app/index.js',
   mode: 'development',
   module: {
     rules: [
@@ -58,7 +58,7 @@ module.exports = {
     hot: true,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3000',
+        target: 'https://localhost/',
         pathRewrite: {
           '/api' : ''
         },

@@ -1,24 +1,18 @@
-import './scss/index.scss';
-import 'bootstrap';
-import 'jquery';
 import moment from 'moment/min/moment.min';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Editor from '../components/editor';
 import Navbar from '../components/navbar';
 import Sidebar from '../components/sidebar';
 
-import DeleteNote from './../api/notes/delete';
-import FindNote from './../api/notes/find';
-import GetNotes from './../api/notes/get';
+import DeleteNote from '../api/notes/delete';
+import FindNote from '../api/notes/find';
+import GetNotes from '../api/notes/get';
 import PostNote from '../api/notes/post';
 import PutNote from '../api/notes/put';
 
 
-
-
-export default class App extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     console.log('App extends React.Component: ', props);
@@ -115,7 +109,5 @@ export default class App extends React.Component {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));
 
 module.hot.accept();

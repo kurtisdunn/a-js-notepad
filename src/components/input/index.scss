@@ -7,23 +7,28 @@ $default_animation: all 100ms ease-in-out;
 }
 
 .form-control{
-  font-size: 14px;
+  font-size: 1rem;
   color:#f7f7f7;
   width: 100%;
   padding: 10px;
-  background: #282828;
-  border-radius: 2px;
-  border: none;
+  background: inherit;
+  border-radius: 0px;
+
   outline: none;
   border: 1px solid transparent;
+    border-bottom: 1px solid lime;
   transition: $default_animation;
   &:focus{
-    background: #585757;
-    color:#f7f7f7;
+    background: inherit;
+    color:lime;
+    border: 1px solid transparent;
+      border-bottom: 1px solid lime;
   }
   &:disabled{
-    background: #585757;
-    color:#777;
+    background: inherit;
+    color:lime;
+    border: 1px solid transparent;
+      border-bottom: 1px solid lime;
   }
 }
 
@@ -39,10 +44,11 @@ $default_animation: all 100ms ease-in-out;
 
 .form-label-group > label {
   position: absolute;
-  top: -8px;
+  top: -6px;
   left: 0;
   display: block;
   width: 100%;
+  font-size: 1rem;
   margin-bottom: 0; /* Override default `<label>` margin */
   line-height: 1.5;
   color: #f7f7f7;

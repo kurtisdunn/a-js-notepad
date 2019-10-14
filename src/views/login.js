@@ -1,6 +1,5 @@
-import moment from 'moment/min/moment.min';
+import './login.scss';
 import React from 'react';
-
 
 import Authenticate from '../api/user/authenticate';
 import Button from '../components/button';
@@ -17,12 +16,11 @@ export default class Login extends React.Component {
   render(){
 
     return (
-      <div>
+      <div className="login">
         <Form method={ Authenticate }>
           <Input title={'Username'} name={'username'} validator={'required'} />
           <Input title={'Password'} name={'password'} type={'password'} validator={'required'} />
-          <Button value={'Send!'} class={'btn-primary btn-lg float-right'} type={'submit'} />
-        </Form>
+          <Button class={'btn-primary btn-lg float-right'} value={{`<i className="fa fa-arrow-right"></i>"`}} type={'submit'} />
       </div>
     );
   }

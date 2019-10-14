@@ -5,28 +5,36 @@ import Alert from '../../components/alert';
 import validate from '../../utils/validator/form';
 import $ from 'jquery';
 
-function emitResponse (elem, cmpnt) {
-  return function (response) {
-    console.log(response);
-    emit(elem, 'response', {
-      detail: response
-    });
-  };
-}
-
-function emitSuccess (elem, cmpnt) {
-  console.log('asdf', cmpnt);
-  return function (response) {
-    cmpnt.setState({ response: response.toString(), responseType: 'success' });
-  };
-}
-
-function emitError (elem, cmpnt) {
-  console.log('error')
-  return function (response) {
-    // cmpnt.setState({ response: response.toString(), responseType: 'danger' });
-  };
-}
+// function emitResponse (elem, cmpnt) {
+//   return function (response) {
+//
+//     emit(elem, 'response', {
+//       detail: response
+//     });
+//   };
+// }
+//
+// function emitSuccess (elem, cmpnt) {
+//
+//   return function (response) {
+//       console.log('asdf', response);
+//       if(response.success){
+//         console.log('asdf', response);
+//         cmpnt.setState({ response: response.toString(), responseType: 'success' });
+//       }
+//
+//   };
+// }
+//
+// function emitError (elem, cmpnt) {
+//   console.log('error')
+//   return function (response) {
+//     if(!response.success){
+//         cmpnt.setState({ response: response.toString(), responseType: 'danger' });
+//     }
+//
+//   };
+// }
 
 function serialize(elem) {
   return $(elem).serializeArray().reduce(function(prev, curr) {
@@ -72,6 +80,9 @@ export default class Form extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.recursiveCloneChildren = this.recursiveCloneChildren.bind(this);
+    this.emitSuccess = this.emitSuccess.bind(this);
+    this.emitSuccess = this.emitSuccess.bind(this);
+    this.emitError = this.emitError.bind(this);
   }
 
   handleSubmit(event) {
@@ -91,10 +102,39 @@ export default class Form extends React.Component {
         return;
       }
       handler(serialize(form))
-        .then(emitResponse(form))
-        .then(emitSuccess(form, that))
-        // .catch(emitError(form, that));
+        .then(that.emitSuccess(form))
+        .catch(that.emitError(form));
     });
+  }
+  emitResponse (form) {
+    return function (response) {
+      emit(form, 'response', {
+        detail: response
+      });
+    };
+  }
+
+  emitSuccess () {
+    const that = this;
+    return function (response) {
+        if(response.success === true){
+          console.log('asdf', response.success);
+          that.setState({ response: response.toString(), responseType: 'success' });
+          console.log(that.state);
+        }
+    };
+  }
+  emitError () {
+    const that = this;
+
+    return function (response) {
+
+      if(response.success === undefined){
+          console.log('error', response.success)
+          that.setState({ response: response.toString(), responseType: 'danger' });
+      }
+
+    };
   }
   recursiveCloneChildren(children) {
     const that = this;
@@ -111,6 +151,7 @@ export default class Form extends React.Component {
     });
   }
   render() {
+    console.log(this.state.responseType);
     return (
       <form onSubmit={this.handleSubmit} >
         { this.state.response ? <Alert type={ this.state.responseType } message={ this.state.response }/> : null}

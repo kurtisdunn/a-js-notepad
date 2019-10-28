@@ -1,15 +1,16 @@
-// .btn-primary{
-//   background: #4baa8c;
-//   color: #f5f7ec;
-//   border-color: #4baa8c;
-//   outline: none;
-//
-//   &:hover{
-//     background: #f5f7ec;
-//     color: #2b2434;
-//     border-color: #f5f7ec;
-//   }
-// }
+.btn-primary{
+  background: #000;
+  color: lime;
+  // border-color: #4baa8c;
+  // outline: none;
+  border:1px solid transparent;
+
+  &:hover{
+    background: #000;
+    color: lime;
+    border: 1px solid lime;
+  }
+}
 // .btn-buy-now {
 //     background-color: #4baa8c;
 //     color: rgb(255, 255, 255);

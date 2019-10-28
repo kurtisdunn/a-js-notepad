@@ -1,5 +1,5 @@
 
-$default_animation: all 100ms ease-in-out;
+$default_animation: all 300ms ease-in-out;
 
 :root {
   --input-padding-x: .75rem;
@@ -7,10 +7,10 @@ $default_animation: all 100ms ease-in-out;
 }
 
 .form-control{
-  font-size: 1rem;
+  font-size: 0.95rem;
   color:#f7f7f7;
   width: 100%;
-  padding: 10px;
+  padding: 2px;
   background: inherit;
   border-radius: 0px;
 
@@ -44,14 +44,14 @@ $default_animation: all 100ms ease-in-out;
 
 .form-label-group > label {
   position: absolute;
-  top: -6px;
+  top: -5px;
   left: 0;
   display: block;
   width: 100%;
   font-size: 1rem;
   margin-bottom: 0; /* Override default `<label>` margin */
   line-height: 1.5;
-  color: #f7f7f7;
+  color: lime;
   cursor: text; /* Match the input under the label */
   border: 1px solid transparent;
   border-radius: .25rem;
@@ -121,4 +121,5 @@ $default_animation: all 100ms ease-in-out;
 
 .has-danger > .form-control{
   border: 1px solid #d23737;
+  transition: $default_animation;
 }

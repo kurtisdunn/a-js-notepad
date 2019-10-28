@@ -1,11 +1,12 @@
+$default_animation: all 300ms ease-in-out;
+
 #sidebar-wrapper {
   min-height: 100vh;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
   transition: margin .25s ease-out;
-    max-width: 220px;
-
+  max-width: 220px;
 }
   .sidebar{
     min-height: 100vh;
@@ -13,7 +14,7 @@
     .note{
       cursor: pointer;
       color:rgba(0, 255, 1, 0.88);
-
+      transition: $default_animation;
       padding: 0.7em .5rem;
       border-bottom: 1px solid rgba(0, 255, 0, 0.2);
       line-height: 0.9rem;

@@ -6,7 +6,7 @@ function getdateFormated (date){
     var otherDates = Moment(date).fromNow();
     var calback= function () {
        return '['+otherDates+']';
-    }
+    };
     return Moment(date).calendar(null,{
        sameDay: '[Today]',
        nextDay:calback,
@@ -40,7 +40,7 @@ export default class Sidebar extends React.Component {
       <div className="sidebar">
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{ padding: '0.45rem 1rem'}}>
         <form className="form-inline">
-          <input className="form-control mr-sm-2" onKeyUp={(e) => { this.searchNotes(e.target.value) }} type="search" placeholder="Search" aria-label="Search" />
+          <input className="form-control mr-sm-2" onKeyUp={(e) => { this.searchNotes(e.target.value); }} type="search" placeholder="Search" aria-label="Search" />
         </form>
       </nav>
         {this.props.notes.map((r, i) => {

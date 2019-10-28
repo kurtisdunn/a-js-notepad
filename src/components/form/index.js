@@ -126,11 +126,9 @@ export default class Form extends React.Component {
   }
   emitError () {
     const that = this;
-
     return function (response) {
-
       if(response.success === undefined){
-          console.log('error', response.success)
+          console.log('error', response.success);
           that.setState({ response: response.toString(), responseType: 'danger' });
       }
 
@@ -151,9 +149,8 @@ export default class Form extends React.Component {
     });
   }
   render() {
-    console.log(this.state.responseType);
     return (
-      <form onSubmit={this.handleSubmit} >
+      <form onSubmit={this.handleSubmit} callback={ this.state }>
         { this.state.response ? <Alert type={ this.state.responseType } message={ this.state.response }/> : null}
         { this.recursiveCloneChildren(this.props.children) }
       </form>

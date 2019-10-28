@@ -16,27 +16,26 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
         ? <Component {...props} />
         : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
-  )
+  );
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authed: true
-    }
+      authed: false
+    };
   }
 
   render(){
     return(
     <Router>
       <Switch>
-      <Route path="/login" component = {Login} />} />
-      <PrivateRoute authed={ this.state.authed } path='/'  component = {Home} />
-
+        <Route path="/login" component = { Login } />} />
+        <PrivateRoute authed={ this.state.authed } path='/'  component = {Home} />
       </Switch>
     </Router>
-  )
+  );
   }
 }
 

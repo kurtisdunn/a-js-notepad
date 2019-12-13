@@ -72,6 +72,7 @@ function serialize(elem) {
 export default class Form extends React.Component {
   constructor(props) {
     super(props);
+    console.log('Form extends React.Component: ', props);
 
     this.state = {
       erros: null,
@@ -120,7 +121,7 @@ export default class Form extends React.Component {
         if(response.success === true){
           console.log('asdf', response.success);
           that.setState({ response: response.toString(), responseType: 'success' });
-          console.log(that.state);
+          that.props.callback(JSON.stringify(response));
         }
     };
   }
@@ -128,8 +129,10 @@ export default class Form extends React.Component {
     const that = this;
     return function (response) {
       if(response.success === undefined){
-          console.log('error', response.success);
+          console.log('error', response);
           that.setState({ response: response.toString(), responseType: 'danger' });
+          that.props.callback(JSON.stringify(response));
+
       }
 
     };
@@ -149,8 +152,9 @@ export default class Form extends React.Component {
     });
   }
   render() {
+    console.log(this.state.response);
     return (
-      <form onSubmit={this.handleSubmit} callback={ this.state }>
+      <form onSubmit={this.handleSubmit}>
         { this.state.response ? <Alert type={ this.state.responseType } message={ this.state.response }/> : null}
         { this.recursiveCloneChildren(this.props.children) }
       </form>

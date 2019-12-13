@@ -1,5 +1,6 @@
-// import fetch from '../../lib/fetch';
-//
-// export default function () {
-//   return fetch('helix/user/authenticated');
-// }
+import fetch from '../../utils/fetch';
+
+export default function (data) {
+  return fetch('/user')
+  .then(r => r);
+}
